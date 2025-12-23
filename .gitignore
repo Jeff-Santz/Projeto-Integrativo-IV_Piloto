@@ -1,0 +1,14 @@
+# ESP-IDF (geral)
+**/build/
+**/managed_components/
+
+# ESP-IDF configs temporários
+**/sdkconfig.old
+**/sdkconfig.ci.*
+
+# VS Code
+**/.vscode/.cache/
+
+# Sistema
+.DS_Store
+Thumbs.db
