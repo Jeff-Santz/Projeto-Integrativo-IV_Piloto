@@ -1,6 +1,6 @@
 EggLink - Sistema de Monitoramento Climático IoT
 Projeto Integrativo IV - Engenharia Elétrica (Poli-USP)
-Este repositório centraliza o código-fonte desenvolvido para o Sistema de Monitoramento Ambiental e Prevenção de Incêndios, concebido no âmbito da disciplina Projeto Integrativo IV (2024), integrante do Percurso Competências (Piloto) da Escola Politécnica da USP.
+Este repositório centraliza o código-fonte desenvolvido para o Sistema de Monitoramento Ambiental e Prevenção de Incêndios, concebido no âmbito da disciplina Projeto Integrativo IV (2025), integrante do Percurso Competências (Piloto) da Escola Politécnica da USP.
 
 O projeto consiste na implementação de uma rede mesh de baixo consumo energético baseada no protocolo OpenThread, utilizando microcontroladores ESP32-C6 para o monitoramento em tempo real de variáveis microclimáticas, como temperatura, umidade do ar, umidade do solo e qualidade do ar.
 
@@ -41,3 +41,4 @@ O desenvolvimento deste projeto utilizou como base bibliotecas e exemplos da com
 
 Nota sobre Versionamento
 Este repositório consolida módulos que foram desenvolvidos em ambientes separados durante a fase de prototipagem. Arquivos temporários de compilação, binários e dependências locais foram excluídos via .gitignore para assegurar a integridade e limpeza do código-fonte.
+
