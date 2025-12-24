@@ -1,11 +1,11 @@
-EggLink - Sistema de Monitoramento Climático IoT
-Projeto Integrativo IV - Engenharia Elétrica (Poli-USP)
-Este repositório centraliza o código-fonte desenvolvido para o Sistema de Monitoramento Ambiental e Prevenção de Incêndios, concebido no âmbito da disciplina Projeto Integrativo IV (2025), integrante do Percurso Competências (Piloto) da Escola Politécnica da USP.
+EggLink - IoT Climate Monitoring System
+Integrative Project IV - Electrical Engineering (Poli-USP)
+This repository centralizes the source code developed for the Environmental Monitoring and Fire Prevention System, conceived within the scope of the Integrative Project IV (2025) course, part of the Competencies Track (Pilot) at the Polytechnic School of USP.
 
-O projeto consiste na implementação de uma rede mesh de baixo consumo energético baseada no protocolo OpenThread, utilizando microcontroladores ESP32-C6 para o monitoramento em tempo real de variáveis microclimáticas, como temperatura, umidade do ar, umidade do solo e qualidade do ar.
+The project consists of implementing a low-power mesh network based on the OpenThread protocol, utilizing ESP32-C6 microcontrollers for real-time monitoring of microclimatic variables, such as temperature, air humidity, soil moisture, and air quality.
 
-Equipe de Desenvolvimento
-O sistema foi arquitetado e desenvolvido pelos discentes do Percurso Competências:
+Development Team
+The system was architected and developed by the students of the Competencies Track:
 
 Isadora Ribeiro Vital
 
@@ -15,30 +15,29 @@ Jefferson Santos Monteiro
 
 Jorge Ricardo Barbosa França
 
-Estrutura do Repositório
-Para fins de organização, manutenção e avaliação, o projeto foi estruturado como um monorepo, dividido em três diretórios principais que correspondem aos módulos funcionais do sistema:
+Repository Structure
+For organization, maintenance, and evaluation purposes, the project was structured as a monorepo, divided into three main directories corresponding to the functional modules of the system:
 
 1. ot_cli_gateway_final (Border Router)
-Este diretório contém o firmware desenvolvido para o nó central (Gateway). O código é responsável por gerenciar a coexistência dos rádios Wi-Fi e IEEE 802.15.4, atuando como ponte entre a rede mesh local e a internet. Suas principais funções incluem o recebimento de pacotes via protocolo CoAP e o encaminhamento dos dados processados para o servidor externo através de requisições HTTP POST.
+This directory contains the firmware developed for the central node (Gateway). The code is responsible for managing the coexistence of Wi-Fi and IEEE 802.15.4 radios, acting as a bridge between the local mesh network and the internet. Its main functions include receiving packets via the CoAP protocol and forwarding processed data to the external server via HTTP POST requests.
 
 2. ot_cli_nos_final (Sensor Nodes)
-Este diretório armazena o firmware replicável destinado aos nós sensores distribuídos. O software gerencia a leitura dos periféricos — incluindo o sensor analógico de gases MQ-135, a adaptação do sensor TDS para umidade do solo e o sensor digital AHT25 via I2C — e executa as rotinas de economia de energia (Deep Sleep) e transmissão de dados via rede Thread.
+This directory stores the replicable firmware intended for the distributed sensor nodes. The software manages peripheral readings—including the MQ-135 analog gas sensor, the TDS sensor adapted for soil moisture, and the digital AHT25 sensor via I2C—and executes power-saving routines (Deep Sleep) and data transmission via the Thread network.
 
 3. egglink_server (Backend & Dashboard)
-Este diretório contém a aplicação completa do servidor web. O backend foi desenvolvido em Python utilizando o framework Flask, sendo responsável pela recepção dos dados do Gateway, lógica de detecção de alertas de incêndio e integração com a API do Google Sheets para persistência histórica. O diretório também inclui os arquivos de frontend do Dashboard para visualização e geolocalização dos dispositivos.
+This directory contains the complete web server application. The backend was developed in Python using the Flask framework, responsible for receiving data from the Gateway, executing fire alert detection logic, and integrating with the Google Sheets API for historical persistence. The directory also includes frontend files for the Dashboard for device visualization and geolocation.
 
-Tecnologias e Ferramentas
+Technologies and Tools
 Hardware: Espressif ESP32-C6 (RISC-V)
 
 Firmware: ESP-IDF v5.x
 
-Protocolos: OpenThread (IEEE 802.15.4), CoAP, UDP, Wi-Fi, HTTP
+Protocols: OpenThread (IEEE 802.15.4), CoAP, UDP, Wi-Fi, HTTP
 
 Software: C/C++, Python (Flask), Google Apps Script
 
-Créditos e Referências de Terceiros
-O desenvolvimento deste projeto utilizou como base bibliotecas e exemplos da comunidade open-source. Especificamente, a implementação do driver de comunicação I2C para os sensores de temperatura e umidade (AHT25) foi adaptada a partir do repositório espidf_beginer, de autoria de pangcrd (https://github.com/pangcrd/espidf_beginer). O código original recebeu modificações para adequação ao sistema operacional de tempo real (FreeRTOS) utilizado neste projeto.
+Credits and Third-Party References
+The development of this project relied on open-source community libraries and examples. Specifically, the implementation of the I2C communication driver for the temperature and humidity sensors (AHT25) was adapted from the espidf_beginer repository, authored by pangcrd (https://github.com/pangcrd/espidf_beginer). The original code was modified to suit the Real-Time Operating System (FreeRTOS) used in this project.
 
-Nota sobre Versionamento
-Este repositório consolida módulos que foram desenvolvidos em ambientes separados durante a fase de prototipagem. Arquivos temporários de compilação, binários e dependências locais foram excluídos via .gitignore para assegurar a integridade e limpeza do código-fonte.
-
+Note on Versioning
+This repository consolidates modules that were developed in separate environments during the prototyping phase. Temporary build files, binaries, and local dependencies were excluded via .gitignore to ensure source code integrity and cleanliness.
