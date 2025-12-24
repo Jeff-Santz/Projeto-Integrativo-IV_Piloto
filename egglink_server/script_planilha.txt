@@ -1,0 +1,82 @@
+const SHEET_ID = "12mInSUHB_BvxGZ6-woTZ-uxCwNlSkQEfRJxUJMDPZl0";
+
+function doPost(e) {
+  // O LockService impede que duas placas escrevam EXATAMENTE ao mesmo tempo
+  // evitando que dados se percam ou sobrescrevam.
+  var lock = LockService.getScriptLock();
+  
+  try {
+    // Tenta obter acesso exclusivo por até 10 segundos
+    lock.waitLock(10000); 
+  } catch (e) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: "busy", msg: "Server busy" }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  try {
+    var ss = SpreadsheetApp.openById(SHEET_ID);
+    
+    // Parse do JSON vindo do Python
+    var body = JSON.parse(e.postData.contents);
+    
+    // --- LÓGICA DE NOMEAÇÃO DA ABA ---
+    var raw_addr = body.e;
+    var suffix = "";
+
+    // Tratamento para nulo, undefined ou string vazia
+    if (!raw_addr || String(raw_addr).trim() === "") {
+      suffix = "SEM_ID";
+    } else {
+      // Pega os últimos 4 caracteres e coloca em maiúsculo
+      suffix = String(raw_addr).slice(-4).toUpperCase();
+    }
+
+    var sheetName = "Placa_" + suffix; // Ex: "Placa_A1B2" ou "Placa_SEM_ID"
+    
+    // --- VERIFICAÇÃO E CRIAÇÃO DA ABA ---
+    var sheet = ss.getSheetByName(sheetName);
+    
+    // Se a aba não existir, cria e coloca cabeçalho
+    if (!sheet) {
+      sheet = ss.insertSheet(sheetName);
+      // Cabeçalho fixo para ficar organizado
+      sheet.appendRow(["Data Hora", "Endereço Completo (e)", "Temp (t)", "Umid Ar (uA)", "Umid Solo (uS)", "Partículas (p)"]);
+      // Opcional: Congela a primeira linha e deixa negrito
+      sheet.setFrozenRows(1);
+      sheet.getRange(1, 1, 1, 6).setFontWeight("bold");
+    }
+
+    // --- MONTAGEM DA LINHA DE DADOS ---
+    // Usamos ordem fixa para garantir que os dados caiam nas colunas certas do cabeçalho
+    var row = [
+      new Date(),       // Coluna A: Timestamp do Google
+      body.e || "-",    // Coluna B: Endereço completo
+      body.t || 0,      // Coluna C: Temperatura
+      body.uA || 0,     // Coluna D: Umidade Ar
+      body.uS || 0,     // Coluna E: Umidade Solo
+      body.p || 0       // Coluna F: Partículas
+    ];
+
+    sheet.appendRow(row);
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: "ok", sheet: sheetName }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: "error", msg: String(err) }))
+      .setMimeType(ContentService.MimeType.JSON);
+      
+  } finally {
+    // Libera o acesso para a próxima requisição
+    lock.releaseLock();
+  }
+}
+
+function doGet(e) {
+  return ContentService
+    .createTextOutput(JSON.stringify({ status: "Servidor Apps Script rodando!" }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
