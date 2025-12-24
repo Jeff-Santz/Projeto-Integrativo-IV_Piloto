@@ -1,5 +1,5 @@
 EggLink - IoT Climate Monitoring System
-Projeto Integrativo IV - Engenharia Elétrica (Poli-USP)
+
 This repository centralizes the source code developed for the Environmental Monitoring and Fire Prevention System, conceived within the scope of the Projeto Integrativo IV (Integrative Project IV) course, part of the Percurso Competências (Competencies Track - Pilot) at the Escola Politécnica da USP (Polytechnic School of the University of São Paulo).
 
 The project consists of implementing a low-power mesh network based on the OpenThread protocol, utilizing ESP32-C6 microcontrollers for real-time monitoring of microclimatic variables, such as temperature, air humidity, soil moisture, and air quality.
@@ -41,4 +41,5 @@ The development of this project relied on open-source community libraries and ex
 
 Note on Versioning
 This repository consolidates modules that were developed in separate environments during the prototyping phase. Temporary build files, binaries, and local dependencies were excluded via .gitignore to ensure source code integrity and cleanliness.
+
 
